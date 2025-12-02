@@ -30,3 +30,7 @@ frontend/yarn-error.log*
 # Logs
 logs/
 *.log
+
+# Database
+*.mv.db
+*.trace.db
