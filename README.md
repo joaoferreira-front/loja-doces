@@ -56,10 +56,17 @@ git push
 
 ## 🌟 Funcionalidades Implementadas
 
+### 🎨 Design & Experiência (Novo!)
+*   **Hero Ultra Minimalista:** Fundo animado com efeito cascata infinito.
+*   **Scroll Reveal:** Elementos aparecem suavemente conforme você rola a página.
+*   **Animações Staggered:** Efeito "degrau" na entrada de textos e cards.
+*   **Depoimentos:** Seção dinâmica com avaliações reais (incluindo a Margarete C.!).
+*   **Footer:** Rodapé elegante com créditos discretos.
+
 ### 🛒 Cliente
 *   **Catálogo de Produtos:** Visualização de doces com preços e fotos.
 *   **Carrinho de Compras:** Adicionar/Remover itens.
-*   **Checkout:** Pagamento via PIX, Cartão ou Dinheiro.
+*   **Checkout:** Pagamento via PIX (com QR Code real), Cartão ou Dinheiro.
 *   **Meus Pedidos:** Histórico completo.
 *   **Rastreamento em Tempo Real:** Barra de progresso (Recebido -> Preparando -> Saiu -> Entregue).
 
@@ -82,7 +89,7 @@ git push
 ### 👑 Administrador
 *   **URL:** [http://localhost:8082/admin](http://localhost:8082/admin)
 *   **Login:** `admin@doces.com`
-*   **Senha:** `admin`
+*   **Senha:** `Jucabala@123`
 
 ---
 
