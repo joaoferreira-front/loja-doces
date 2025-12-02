@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Hero } from '../components/Hero';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import type { Produto } from '../types';
+import { api } from '../services/api';
 
 const FeaturedSection = styled.section`
   padding: 4rem 2rem;
@@ -70,7 +70,7 @@ export const Home = () => {
   const [featured, setFeatured] = useState<Produto[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/produtos')
+    api.get('/produtos')
       .then(response => {
         // Take first 3 products as featured
         setFeatured(response.data.slice(0, 3));

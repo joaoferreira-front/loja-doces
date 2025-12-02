@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { Home } from './pages/Home';
 import { Menu } from './pages/Menu';
 import { CartPage } from './pages/CartPage';
+import { Contact } from './pages/Contact';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
 import { WhatsAppButton } from './components/WhatsAppButton';
@@ -19,7 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/carrinho" element={<CartPage />} />
-            <Route path="/contato" element={<div style={{ padding: '4rem', textAlign: 'center' }}><h1>Entre em Contato</h1><p>WhatsApp: (11) 95173-7912</p></div>} />
+            <Route path="/contato" element={<Contact />} />
           </Routes>
           <WhatsAppButton />
         </CartProvider>

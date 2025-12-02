@@ -46,32 +46,31 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
 
-  /* WhatsApp Float */
-  .whatsapp-float {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 100;
-    transition: transform 0.3s ease;
+  /* Global Fade In Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .whatsapp-float:hover {
-    transform: scale(1.1);
-    background-color: #128c7e;
+  #root > * {
+    animation: fadeIn 0.6s ease-out;
   }
 
-  .whatsapp-float img {
-    width: 35px;
-    height: 35px;
-    filter: brightness(0) invert(1);
+  /* Scrollbar Customization */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--secondary-color);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
   }
 `;

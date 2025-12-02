@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import type { Produto } from '../types';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { api } from '../services/api';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -144,7 +144,7 @@ export const ProductList = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/produtos')
+    api.get('/produtos')
       .then(response => {
         setProdutos(response.data);
         setFilteredProdutos(response.data);

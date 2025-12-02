@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { api } from '../services/api';
 
 const CheckoutContainer = styled.div`
   background: var(--white);
@@ -22,6 +23,10 @@ const Form = styled.form`
 const InputGroup = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Input = styled.input`
@@ -160,8 +165,11 @@ export const Checkout = () => {
       }))
     };
 
+
+
+    // ... inside component
     try {
-      await axios.post('http://localhost:8080/api/checkout', pedido);
+      await api.post('/checkout', pedido);
 
       let msg = `Olá! Gostaria de confirmar meu pedido na Doces G & J.\n`;
       msg += `--------------------------------\n`;

@@ -20,6 +20,16 @@ const CartItem = styled.div`
   &:last-child {
     border-bottom: none;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    
+    button {
+      width: 100%;
+    }
+  }
 `;
 
 const Total = styled.div`
@@ -44,23 +54,23 @@ const Button = styled.button`
 `;
 
 export const Cart = () => {
-    const { cart, removeFromCart, total } = useCart();
+  const { cart, removeFromCart, total } = useCart();
 
-    if (cart.length === 0) return null;
+  if (cart.length === 0) return null;
 
-    return (
-        <CartContainer>
-            <h2>Seu Carrinho</h2>
-            {cart.map(item => (
-                <CartItem key={item.id}>
-                    <div>
-                        <h4>{item.nome}</h4>
-                        <p>{item.quantidadeCarrinho}x R$ {item.preco.toFixed(2)}</p>
-                    </div>
-                    <Button onClick={() => removeFromCart(item.id)}>Remover</Button>
-                </CartItem>
-            ))}
-            <Total>Total: R$ {total.toFixed(2)}</Total>
-        </CartContainer>
-    );
+  return (
+    <CartContainer>
+      <h2>Seu Carrinho</h2>
+      {cart.map(item => (
+        <CartItem key={item.id}>
+          <div>
+            <h4>{item.nome}</h4>
+            <p>{item.quantidadeCarrinho}x R$ {item.preco.toFixed(2)}</p>
+          </div>
+          <Button onClick={() => removeFromCart(item.id)}>Remover</Button>
+        </CartItem>
+      ))}
+      <Total>Total: R$ {total.toFixed(2)}</Total>
+    </CartContainer>
+  );
 };
