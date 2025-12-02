@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 
 const HeaderContainer = styled.header`
   background-color: var(--white);
@@ -17,11 +19,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
-  }
+  flex-wrap: wrap;
 `;
 
 const Logo = styled(Link)`
@@ -47,10 +45,60 @@ const NavLinks = styled.div`
   align-items: center;
   gap: 2rem;
   
+  @media (max-width: 768px) {
+    display: none;
+  }
+  
   a {
     font-weight: 600;
     color: var(--accent-color);
     transition: color 0.3s;
+    text-decoration: none;
+    
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+`;
+
+const MobileMenuIcon = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--primary-color);
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const MobileNav = styled.div<{ $isOpen: boolean }>`
+  display: none;
+  flex-basis: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    display: ${props => props.$isOpen ? 'flex' : 'none'};
+  }
+
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
     
     &:hover {
       color: var(--primary-color);
@@ -63,11 +111,11 @@ const CartIcon = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-color); /* Ensure icon color matches links */
-  text-decoration: none; /* Remove underline from Link */
+  color: var(--accent-color);
+  text-decoration: none;
 
   &:hover {
-    color: var(--primary-color); /* Hover effect for icon */
+    color: var(--primary-color);
   }
   
   span {
@@ -87,13 +135,13 @@ const CartIcon = styled(Link)`
   }
 `;
 
-import { useAuth } from '../context/AuthContext';
-
-// ... (inside component)
 export const Header = () => {
   const { cart } = useCart();
   const { isAuthenticated, user, logout } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const itemCount = cart.reduce((acc, item) => acc + item.quantidadeCarrinho, 0);
+
+  const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
     <HeaderContainer>
@@ -102,6 +150,12 @@ export const Header = () => {
           <img src="/logo.jpg" alt="Doces G & J Logo" />
           <span>Doces G & J</span>
         </Logo>
+
+        <MobileMenuIcon onClick={toggleMenu} aria-label="Menu">
+          {isMobileMenuOpen ? '✕' : '☰'}
+        </MobileMenuIcon>
+
+        {/* Desktop Menu */}
         <NavLinks>
           <Link to="/">Home</Link>
           <Link to="/menu">Cardápio</Link>
@@ -109,9 +163,7 @@ export const Header = () => {
 
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <Link to="/meus-pedidos" style={{ color: 'var(--accent-color)', fontWeight: '600' }}>
-                Meus Pedidos
-              </Link>
+              <Link to="/meus-pedidos">Meus Pedidos</Link>
               <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
                 Olá, {user?.nome?.split(' ')[0]}
               </span>
@@ -143,6 +195,51 @@ export const Header = () => {
             {itemCount > 0 && <span>{itemCount}</span>}
           </CartIcon>
         </NavLinks>
+
+        {/* Mobile Menu */}
+        <MobileNav $isOpen={isMobileMenuOpen}>
+          <Link to="/" onClick={toggleMenu}>Home</Link>
+          <Link to="/menu" onClick={toggleMenu}>Cardápio</Link>
+          <Link to="/contato" onClick={toggleMenu}>Contato</Link>
+
+          {isAuthenticated ? (
+            <>
+              <Link to="/meus-pedidos" onClick={toggleMenu}>Meus Pedidos</Link>
+              <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
+                Olá, {user?.nome?.split(' ')[0]}
+              </span>
+              <button
+                onClick={() => { logout(); toggleMenu(); }}
+                style={{
+                  background: 'none',
+                  border: '1px solid var(--primary-color)',
+                  color: 'var(--primary-color)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
+              >
+                Sair
+              </button>
+            </>
+          ) : (
+            <Link to="/login" onClick={toggleMenu} style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>Login</Link>
+          )}
+
+          <Link to="/carrinho" onClick={toggleMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            Carrinho
+            <span style={{
+              background: 'var(--primary-color)',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '0.1rem 0.5rem',
+              fontSize: '0.8rem'
+            }}>
+              {itemCount}
+            </span>
+          </Link>
+        </MobileNav>
       </Nav>
     </HeaderContainer>
   );

@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, type ReactNode } from 'react';
+import { createContext, useState, useContext, useEffect, type ReactNode } from 'react';
 import type { Produto, ItemCarrinho } from '../types';
 
 interface CartContextData {
@@ -12,7 +12,33 @@ interface CartContextData {
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-    const [cart, setCart] = useState<ItemCarrinho[]>([]);
+    const [cart, setCart] = useState<ItemCarrinho[]>(() => {
+        try {
+            const storedCart = localStorage.getItem('@DocesGJ:cart');
+            if (storedCart) {
+                const parsed = JSON.parse(storedCart);
+                if (Array.isArray(parsed)) {
+                    // Validate each item to ensure it has necessary properties
+                    return parsed.filter(item =>
+                        item &&
+                        typeof item.id === 'number' &&
+                        typeof item.nome === 'string' &&
+                        typeof item.preco === 'number' &&
+                        typeof item.quantidadeCarrinho === 'number'
+                    );
+                }
+                return [];
+            }
+        } catch (error) {
+            console.error("Erro ao carregar carrinho:", error);
+            localStorage.removeItem('@DocesGJ:cart');
+        }
+        return [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('@DocesGJ:cart', JSON.stringify(cart));
+    }, [cart]);
 
     const addToCart = (produto: Produto) => {
         setCart(currentCart => {

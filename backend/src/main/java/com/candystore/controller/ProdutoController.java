@@ -25,4 +25,17 @@ public class ProdutoController {
         // Chama o serviço para buscar todos os produtos cadastrados no banco.
         return produtoService.findAll();
     }
+
+    @org.springframework.web.bind.annotation.PostMapping("/{id}/imagem")
+    public org.springframework.http.ResponseEntity<?> uploadImagem(
+            @org.springframework.web.bind.annotation.PathVariable Long id,
+            @org.springframework.web.bind.annotation.RequestParam("file") org.springframework.web.multipart.MultipartFile file) {
+        try {
+            produtoService.atualizarImagem(id, file);
+            return org.springframework.http.ResponseEntity.ok()
+                    .body("{\"message\": \"Imagem atualizada com sucesso!\"}");
+        } catch (Exception e) {
+            return org.springframework.http.ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
 }

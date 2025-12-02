@@ -31,29 +31,29 @@ const InfoGroup = styled.div`
 `;
 
 export const Contact = () => {
-    return (
-        <Container>
-            <Title>Fale Conosco</Title>
+  return (
+    <Container>
+      <Title>Fale Conosco</Title>
 
-            <InfoGroup>
-                <h3>WhatsApp</h3>
-                <p>(11) 95173-7912</p>
-            </InfoGroup>
+      <InfoGroup>
+        <h3>WhatsApp</h3>
+        <p>(11) 95173-7912</p>
+      </InfoGroup>
 
-            <InfoGroup>
-                <h3>Endereço</h3>
-                <p>Rua dos Doces Sonhos, 123<br />Bairro da Felicidade - São Paulo, SP</p>
-            </InfoGroup>
+      <InfoGroup>
+        <h3>Endereço</h3>
+        <p>Rua Ponta Grossa, 6<br />Batistini - São Bernardo do Campo, SP</p>
+      </InfoGroup>
 
-            <InfoGroup>
-                <h3>Horário de Funcionamento</h3>
-                <p>Segunda a Sábado: 09h às 18h<br />Domingo: Fechado</p>
-            </InfoGroup>
+      <InfoGroup>
+        <h3>Horário de Funcionamento</h3>
+        <p>Segunda a Sábado: 09h às 18h<br />Domingo: Fechado</p>
+      </InfoGroup>
 
-            <InfoGroup>
-                <h3>Email</h3>
-                <p>contato@docesgej.com.br</p>
-            </InfoGroup>
-        </Container>
-    );
+      <InfoGroup>
+        <h3>Email</h3>
+        <p>contato@docesgej.com.br</p>
+      </InfoGroup>
+    </Container>
+  );
 };

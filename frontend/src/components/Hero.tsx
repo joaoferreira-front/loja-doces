@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
+  background-color: var(--secondary-color); /* Cor de fundo de fallback */
   padding: 6rem 2rem;
   text-align: center;
   display: flex;
@@ -10,12 +10,71 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   min-height: 70vh;
+  position: relative;
+  overflow: hidden;
+
+  /* Efeito Cascata Suave */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200%; /* Altura dobrada para o loop */
+    background: url('/images/hero-bg.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 1; /* Totalmente visível */
+    animation: waterfall 40s linear infinite; /* Um pouco mais rápido */
+    z-index: 0; /* No nível do container, mas atrás do conteúdo (que terá z-index maior) */
+  }
+
+  /* Overlay para garantir leitura */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3); /* Camada branca translúcida mais leve */
+    z-index: 1;
+  }
+
+  /* Conteúdo deve ficar acima do background e overlay */
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes waterfall {
+    0% {
+      transform: translateY(-50%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const Title = styled.h1`
   font-size: 5.5rem;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0; /* Começa invisível */
   
   @media (max-width: 768px) {
     font-size: 3rem;
@@ -28,6 +87,9 @@ const Subtitle = styled.p`
   letter-spacing: 3px;
   text-transform: uppercase;
   font-weight: 300;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.1s;
+  opacity: 0; /* Começa invisível */
 `;
 
 const Button = styled(Link)`
@@ -42,6 +104,9 @@ const Button = styled(Link)`
   transition: transform 0.2s, background-color 0.3s;
   cursor: pointer;
   text-decoration: none;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.5s;
+  opacity: 0; /* Começa invisível */
 
   &:hover {
     background-color: #c0757e;

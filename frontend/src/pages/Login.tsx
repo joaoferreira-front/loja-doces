@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { api } from '../services/api';
 import { useToast } from '../context/ToastContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Container = styled.div`
@@ -49,20 +49,13 @@ const Button = styled.button`
   }
 `;
 
-const GoogleButton = styled(Button)`
-  background-color: #db4437;
-  margin-top: 1rem;
-  &:hover {
-    background-color: #c53929;
-  }
-`;
+
 
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const { showToast } = useToast();
-  const navigate = useNavigate();
   const { checkAuth } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -104,9 +97,7 @@ export const Login = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8082/oauth2/authorization/google';
-  };
+
 
   return (
     <Container>

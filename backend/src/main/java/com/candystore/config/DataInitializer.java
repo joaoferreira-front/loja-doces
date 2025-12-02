@@ -21,14 +21,21 @@ public class DataInitializer {
         public CommandLineRunner initialData() {
                 return args -> {
                         // Criar Admin se não existir
-                        if (usuarioRepository.findByEmail("admin@doces.com").isEmpty()) {
+                        // Criar ou Atualizar Admin
+                        java.util.Optional<Usuario> adminOpt = usuarioRepository.findByEmail("admin@doces.com");
+                        if (adminOpt.isPresent()) {
+                                Usuario admin = adminOpt.get();
+                                admin.setSenha(passwordEncoder.encode("Jucabala@123"));
+                                usuarioRepository.save(admin);
+                                System.out.println("Senha do Admin ATUALIZADA para: Jucabala@123");
+                        } else {
                                 Usuario admin = new Usuario();
                                 admin.setNome("Administrador");
                                 admin.setEmail("admin@doces.com");
-                                admin.setSenha(passwordEncoder.encode("admin"));
+                                admin.setSenha(passwordEncoder.encode("Jucabala@123"));
                                 admin.setProvider(Usuario.Provider.LOCAL);
                                 usuarioRepository.save(admin);
-                                System.out.println("Usuário Admin criado: admin@doces.com / admin");
+                                System.out.println("Usuário Admin CRIADO: admin@doces.com / Jucabala@123");
                         }
 
                         // Criar Neto se não existir

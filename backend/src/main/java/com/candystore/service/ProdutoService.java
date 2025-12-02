@@ -114,4 +114,36 @@ public class ProdutoService {
 
                 System.out.println("--- BANCO DE DADOS POPULADO COM SUCESSO! ---");
         }
+        // ... existing code ...
+
+        public void atualizarImagem(Long id, org.springframework.web.multipart.MultipartFile file)
+                        throws java.io.IOException {
+                if (id == null) {
+                        throw new IllegalArgumentException("ID do produto não pode ser nulo");
+                }
+                Produto produto = produtoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+                // Caminho absoluto para a pasta public do frontend (Ajuste conforme seu
+                // ambiente)
+                // Usando o caminho conhecido do ambiente do usuário
+                String uploadDir = "c:\\Users\\joao\\Desktop\\antigravity\\scratch\\Loja-de-Doce\\frontend\\public\\uploads";
+
+                java.io.File directory = new java.io.File(uploadDir);
+                if (!directory.exists()) {
+                        directory.mkdirs();
+                }
+
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                java.nio.file.Path filePath = java.nio.file.Paths.get(uploadDir, fileName);
+
+                java.nio.file.Files.copy(file.getInputStream(), filePath,
+                                java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                // A URL será relativa ao frontend
+                String fileUrl = "/uploads/" + fileName;
+
+                produto.setImagemUrl(fileUrl);
+                produtoRepository.save(produto);
+        }
 }

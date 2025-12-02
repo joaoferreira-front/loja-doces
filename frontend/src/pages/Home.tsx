@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import type { Produto } from '../types';
 import { api } from '../services/api';
+import { Testimonials } from '../components/Testimonials';
+import { ScrollReveal } from '../components/ScrollReveal';
 
 const FeaturedSection = styled.section`
   padding: 4rem 2rem;
@@ -30,6 +32,7 @@ const Card = styled.div`
   padding: 1.5rem;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   transition: transform 0.3s;
+  height: 100%; /* Garante altura total dentro do wrapper */
 
   &:hover {
     transform: translateY(-5px);
@@ -82,20 +85,28 @@ export const Home = () => {
     <>
       <Hero />
       <FeaturedSection>
-        <SectionTitle>Nossos Destaques</SectionTitle>
+        <ScrollReveal>
+          <SectionTitle>Nossos Destaques</SectionTitle>
+        </ScrollReveal>
 
         <Grid>
-          {featured.map(produto => (
-            <Card key={produto.id}>
-              <img src={produto.imagemUrl} alt={produto.nome} />
-              <h3>{produto.nome}</h3>
-              <p style={{ color: '#888', marginBottom: '1rem' }}>R$ {produto.preco.toFixed(2)}</p>
-            </Card>
+          {featured.map((produto, index) => (
+            <ScrollReveal key={produto.id} delay={`${index * 0.1}s`} style={{ height: '100%' }}>
+              <Card>
+                <img src={produto.imagemUrl} alt={produto.nome} />
+                <h3>{produto.nome}</h3>
+                <p style={{ color: '#888', marginBottom: '1rem' }}>R$ {produto.preco.toFixed(2)}</p>
+              </Card>
+            </ScrollReveal>
           ))}
         </Grid>
 
-        <Button to="/menu">Ver Cardápio Completo</Button>
+        <ScrollReveal delay="0.2s">
+          <Button to="/menu">Ver Cardápio Completo</Button>
+        </ScrollReveal>
       </FeaturedSection>
+
+      <Testimonials />
     </>
   );
 };
