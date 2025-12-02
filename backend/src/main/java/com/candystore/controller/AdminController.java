@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.candystore.enums.StatusPedido;
+import java.math.BigDecimal;
+
 @Controller
 public class AdminController {
 
@@ -25,8 +28,17 @@ public class AdminController {
     @GetMapping("/admin")
     public String dashboard(Model model) {
         // Busca todos os produtos e pedidos para exibir na tela de admin
+        var pedidos = pedidoRepository.findAll();
+
+        // Calcula o total vendido (apenas pedidos não cancelados)
+        BigDecimal totalVendas = pedidos.stream()
+                .filter(p -> p.getStatus() != StatusPedido.CANCELADO)
+                .map(p -> p.getValorTotal() != null ? p.getValorTotal() : BigDecimal.ZERO)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         model.addAttribute("produtos", produtoRepository.findAll());
-        model.addAttribute("pedidos", pedidoRepository.findAll());
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("totalVendas", totalVendas);
         model.addAttribute("logs", loginLogRepository.findTop20ByOrderByDataHoraDesc());
         return "admin";
     }
