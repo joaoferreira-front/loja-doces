@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pedido Confirmado!</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+
+<body>
+
+    <div class="container" style="text-align: center; padding-top: 5rem;">
+        <h1 style="color: var(--primary-color); font-size: 3rem; margin-bottom: 1rem;">Pedido Confirmado! 🎉</h1>
+        <p style="font-size: 1.2rem; color: var(--text-color); margin-bottom: 3rem;">Obrigado por comprar na Doces G &
+            J.<br>Seus doces serão preparados com muito carinho.</p>
+
+        <!-- Botão do WhatsApp -->
+        <div th:if="${whatsappMessage}">
+            <a th:href="'https://wa.me/5511999999999?text=' + ${#uris.escapePathSegment(whatsappMessage)}" class="btn"
+                style="background-color: #25d366; padding: 1rem 2rem; font-size: 1.2rem; display: inline-flex; align-items: center; justify-content: center; gap: 10px; max-width: 400px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"
+                    style="width: 24px; filter: brightness(0) invert(1);">
+                Enviar Pedido no WhatsApp
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">Clique acima para nos enviar os detalhes do
+                pedido!</p>
+        </div>
+
+        <a href="/" class="btn"
+            style="background-color: var(--secondary-color); color: var(--text-color); margin-top: 2rem; max-width: 200px;">Voltar
+            para a Loja</a>
+    </div>
+
+</body>
+
+</html>

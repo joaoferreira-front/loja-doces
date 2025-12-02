@@ -1,0 +1,42 @@
+<h1>💳 Finalizar Pedido</h1>
+</header>
+
+<div class="container">
+    <div class="product-card" style="padding: 2rem; max-width: 600px; margin: 0 auto;">
+        <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Detalhes do Pagamento</h2>
+
+        <div style="margin-bottom: 2rem; text-align: center;">
+            <p>Total a Pagar:</p>
+            <h1 style="color: var(--text-color);" th:text="'R$ ' + ${total}">R$ 0,00</h1>
+        </div>
+
+        <form action="/checkout" method="post">
+            <div style="margin-bottom: 1.5rem;">
+                <label for="formaPagamento" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Forma
+                    de Pagamento</label>
+                <select name="formaPagamento" id="formaPagamento" required
+                    style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 10px; font-family: inherit;">
+                    <option value="" disabled selected>Selecione...</option>
+                    <option th:each="forma : ${formasPagamento}" th:value="${forma}" th:text="${forma}">PIX</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <label for="dataEntrega" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Data/Hora
+                    da Entrega</label>
+                <input type="datetime-local" name="dataEntrega" id="dataEntrega" required
+                    style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 10px; font-family: inherit;">
+            </div>
+
+            <button type="submit" class="btn">Confirmar Pedido</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="/carrinho" style="color: #888; text-decoration: none;">Cancelar e Voltar</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

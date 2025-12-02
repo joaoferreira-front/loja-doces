@@ -1,0 +1,496 @@
+:root {
+    --primary-color: #D48C95;
+    /* Dusty Pink */
+    --secondary-color: #FDF0F0;
+    /* Very Light Pink Background */
+    --accent-color: #8B5E63;
+    /* Darker Text/Heading */
+    --text-color: #5A4A4E;
+    /* Soft Brown/Grey Text */
+    --background-color: #FFF9F9;
+    /* Creamy White */
+    --white: #ffffff;
+    --shadow: 0 4px 15px rgba(212, 140, 149, 0.15);
+    --font-heading: 'Pacifico', cursive;
+    --font-body: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Header & Nav */
+header {
+    background-color: var(--white);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    font-size: 2rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #FDF0F0 0%, #FFF9F9 100%);
+    padding: 6rem 2rem;
+    /* Increased padding */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    /* Taller hero */
+}
+
+.hero h1 {
+    font-family: var(--font-heading);
+    font-size: 5.5rem;
+    /* Larger font */
+    color: var(--accent-color);
+    /* Changed to accent color for elegance */
+    text-shadow: none;
+    /* Removed hard shadow for cleaner look */
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 2.5rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.hero .btn {
+    background-color: var(--primary-color);
+    padding: 1.2rem 3.5rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 20px rgba(212, 140, 149, 0.3);
+    /* Soft shadow on button */
+}
+
+/* Section Titles */
+.section-title {
+    text-align: center;
+    margin: 5rem 0 3rem;
+    font-size: 2rem;
+    color: var(--accent-color);
+    font-family: var(--font-heading);
+    /* Use fancy font for sections too */
+    text-transform: none;
+    /* Keep natural case */
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 1rem auto 0;
+    opacity: 0.5;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Slightly wider cards */
+    gap: 3rem;
+    /* More space between cards */
+    margin-bottom: 6rem;
+}
+
+/* Product Card */
+.product-card {
+    background: var(--white);
+    border-radius: 25px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    /* Very subtle shadow initially */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: none;
+    /* No border */
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(212, 140, 149, 0.2);
+    /* Richer shadow on hover */
+    border-color: transparent;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.product-card h3 {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-card p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.product-card .price {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 30px;
+    /* Pill shape */
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #c0757e;
+    transform: scale(1.02);
+}
+
+.btn:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.badge-soldout {
+    background-color: #ffebee;
+    color: #ef5350;
+    border: 1px solid #ffcdd2;
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+footer h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #FDF0F0 0%, #FFF9F9 100%);
+    padding: 6rem 2rem;
+    /* Increased padding */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    /* Taller hero */
+}
+
+.hero h1 {
+    font-family: var(--font-heading);
+    font-size: 5.5rem;
+    /* Larger font */
+    color: var(--accent-color);
+    /* Changed to accent color for elegance */
+    text-shadow: none;
+    /* Removed hard shadow for cleaner look */
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 2.5rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.hero .btn {
+    background-color: var(--primary-color);
+    padding: 1.2rem 3.5rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 10px 20px rgba(212, 140, 149, 0.3);
+    /* Soft shadow on button */
+}
+
+/* Section Titles */
+.section-title {
+    text-align: center;
+    margin: 5rem 0 3rem;
+    font-size: 2rem;
+    color: var(--accent-color);
+    font-family: var(--font-heading);
+    /* Use fancy font for sections too */
+    text-transform: none;
+    /* Keep natural case */
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 1rem auto 0;
+    opacity: 0.5;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Slightly wider cards */
+    gap: 3rem;
+    /* More space between cards */
+    margin-bottom: 6rem;
+}
+
+/* Product Card */
+.product-card {
+    background: var(--white);
+    border-radius: 25px;
+    padding: 2.5rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    /* Very subtle shadow initially */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: none;
+    /* No border */
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(212, 140, 149, 0.2);
+    /* Richer shadow on hover */
+    border-color: transparent;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.product-card h3 {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-card p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.product-card .price {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 30px;
+    /* Pill shape */
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #c0757e;
+    transform: scale(1.02);
+}
+
+.btn:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.badge-soldout {
+    background-color: #ffebee;
+    color: #ef5350;
+    border: 1px solid #ffcdd2;
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    padding: 4rem 2rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+footer h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #128c7e;
+}
+
+.whatsapp-float img {
+    width: 35px;
+    height: 35px;
+    filter: brightness(0) invert(1);
+    /* Make icon white */
+}
