@@ -12,22 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service
-package com.candystore.service;
-
-import com.candystore.enums.FormaPagamento;
-import com.candystore.model.ItemPedido;
-import com.candystore.model.Pedido;
-import com.candystore.repository.PedidoRepository;
-import com.candystore.session.Carrinho;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import com.candystore.dto.PedidoDTO;
 import com.candystore.dto.ItemPedidoDTO;
+import com.candystore.dto.PedidoDTO;
 import com.candystore.model.Produto;
 import com.candystore.repository.ProdutoRepository;
 import java.math.BigDecimal;
@@ -57,7 +43,8 @@ public class PedidoService {
 
         for (ItemPedidoDTO itemDTO : pedidoDTO.getItens()) {
             Produto produto = produtoRepository.findById(itemDTO.getProdutoId())
-                    .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + itemDTO.getProdutoId()));
+                    .orElseThrow(
+                            () -> new IllegalArgumentException("Produto não encontrado: " + itemDTO.getProdutoId()));
 
             // Validação de Estoque
             if (produto.getQuantidade() < itemDTO.getQuantidade()) {

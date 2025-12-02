@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import type { Produto } from '../types';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -140,6 +141,7 @@ export const ProductList = () => {
   const [filteredProdutos, setFilteredProdutos] = useState<Produto[]>([]);
   const [filter, setFilter] = useState('Todos');
   const { addToCart } = useCart();
+  const { showToast } = useToast();
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/produtos')
@@ -165,7 +167,7 @@ export const ProductList = () => {
 
   const handleAddToCart = (produto: Produto) => {
     addToCart(produto);
-    alert(`Delícia! ${produto.nome} foi adicionado ao carrinho. 🍬`);
+    showToast(`Delícia! ${produto.nome} foi adicionado ao carrinho. 🍬`, 'success');
   };
 
   return (

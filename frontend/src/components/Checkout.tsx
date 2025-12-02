@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
 const CheckoutContainer = styled.div`
   background: var(--white);
@@ -73,15 +74,12 @@ const SuccessMsg = styled.p`
 // ==================================================================================
 // CONFIGURAÇÕES DE ENTREGA E CONTATO
 // ==================================================================================
-// Aqui você define onde fica sua loja e o raio de entrega.
-// STORE_COORDS: Coordenadas da sua loja (Pegue no Google Maps: clique com botão direito > O que há aqui?)
 const STORE_COORDS = { lat: -23.77335, lon: -46.59984 }; // Rua Ponta Grossa, 6, SBC
-
-// MAX_DISTANCE_KM: Até quantos km você entrega?
 const MAX_DISTANCE_KM = 20;
 
 export const Checkout = () => {
   const { cart, total, clearCart } = useCart();
+  const { showToast } = useToast();
   const [dataEntrega, setDataEntrega] = useState('');
   const [formaPagamento, setFormaPagamento] = useState('PIX');
 
@@ -149,7 +147,7 @@ export const Checkout = () => {
     e.preventDefault();
 
     if (deliveryStatus !== 'valid') {
-      alert('Por favor, valide seu endereço de entrega primeiro.');
+      showToast('Por favor, valide seu endereço de entrega primeiro.', 'error');
       return;
     }
 
@@ -184,14 +182,16 @@ export const Checkout = () => {
       window.open(whatsappUrl, '_blank');
 
       clearCart();
-      alert('Pedido realizado com sucesso!');
+      showToast('Pedido realizado com sucesso! Redirecionando para o WhatsApp...', 'success');
     } catch (error: any) {
       console.error('Erro ao finalizar pedido:', error);
       // Mostra a mensagem exata do backend (ex: "Estoque insuficiente")
-      if (error.response && error.response.data) {
-        alert(`Erro: ${error.response.data}`);
+      if (error.response && error.response.data && typeof error.response.data === 'string') {
+        showToast(`Erro: ${error.response.data}`, 'error');
+      } else if (error.response && error.response.data && error.response.data.message) {
+        showToast(`Erro: ${error.response.data.message}`, 'error');
       } else {
-        alert('Erro ao finalizar pedido. Tente novamente.');
+        showToast('Erro ao finalizar pedido. Tente novamente.', 'error');
       }
     }
   };

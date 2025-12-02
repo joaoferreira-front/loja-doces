@@ -20,29 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/checkout")
-package com.candystore.controller;
-
-import com.candystore.enums.FormaPagamento;
-import com.candystore.service.PedidoService;
-import com.candystore.session.Carrinho;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.time.LocalDateTime;
-
-import com.candystore.dto.PedidoDTO;
-import com.candystore.model.Pedido;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController

@@ -85,5 +85,33 @@ public class ProdutoService {
                                 new Produto(null, "Pão de Mel", "Recheado com doce de leite e coberto com chocolate",
                                                 new BigDecimal("7.50"), 25,
                                                 "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500"));
+
+                // Novos produtos de teste solicitados
+                produtoRepository.save(new Produto(null, "Bolo de Pote de Leite Ninho",
+                                "Camadas de bolo fofinho com creme de Leite Ninho",
+                                new BigDecimal("12.90"), 15,
+                                "https://images.unsplash.com/photo-1563729768-3980d7c7463e?w=500"));
+                produtoRepository.save(new Produto(null, "Cone Trufado de Nutella",
+                                "Casquinha crocante recheada com Nutella pura",
+                                new BigDecimal("9.90"), 20,
+                                "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500"));
+
+                // Mais produtos para garantir categorias (Bolo, Doce, Torta)
+                produtoRepository.save(new Produto(null, "Bolo de Fubá com Goiabada",
+                                "Clássico bolo caseiro com pedaços de goiabada",
+                                new BigDecimal("8.00"), 10,
+                                "https://images.unsplash.com/photo-1600617294526-80f2ffb02a4e?w=500"));
+
+                produtoRepository.save(new Produto(null, "Doce de Abóbora",
+                                "Doce de abóbora caseiro em pedaços com coco",
+                                new BigDecimal("6.50"), 30,
+                                "https://images.unsplash.com/photo-1576618148400-f54bed99fcf8?w=500"));
+
+                produtoRepository.save(new Produto(null, "Torta Holandesa",
+                                "Creme leve com base de biscoito e cobertura de chocolate",
+                                new BigDecimal("14.00"), 12,
+                                "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500"));
+
+                System.out.println("--- BANCO DE DADOS POPULADO COM SUCESSO! ---");
         }
 }
