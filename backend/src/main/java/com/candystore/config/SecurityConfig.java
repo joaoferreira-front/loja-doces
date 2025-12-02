@@ -4,30 +4,52 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+        @org.springframework.beans.factory.annotation.Autowired
+        private org.springframework.security.web.authentication.AuthenticationSuccessHandler authenticationSuccessHandler;
+
+        @org.springframework.beans.factory.annotation.Autowired
+        private org.springframework.security.web.authentication.AuthenticationFailureHandler authenticationFailureHandler;
+
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
-                                .csrf(csrf -> csrf.disable()) // Disable CSRF for REST API simplicity in MVP
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/admin/**").authenticated() // Protect Admin
-                                                .anyRequest().permitAll() // Allow everything else (API, Frontend
-                                                                          // assets)
-                                )
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                                .requestMatchers("/api/register", "/api/auth/status",
+                                                                "/api/manual/logout")
+                                                .permitAll()
+                                                .requestMatchers("/meus-pedidos/**", "/api/checkout").authenticated()
+                                                .anyRequest().permitAll())
                                 .formLogin(form -> form
-                                                .defaultSuccessUrl("/admin", true)
+                                                .loginPage("/login")
+                                                .loginProcessingUrl("/api/login")
+                                                .successHandler(authenticationSuccessHandler)
+                                                .failureHandler(authenticationFailureHandler)
                                                 .permitAll())
-                                .logout(logout -> logout.permitAll());
+                                // .oauth2Login(oauth2 -> oauth2
+                                // .loginPage("/login")
+                                // .defaultSuccessUrl("/meus-pedidos", true))
+                                .logout(logout -> logout
+                                                .logoutUrl("/api/logout")
+                                                .invalidateHttpSession(true)
+                                                .clearAuthentication(true)
+                                                .deleteCookies("DOCES_SESSION", "remember-me", "JSESSIONID")
+                                                .logoutSuccessHandler((request, response, authentication) -> {
+                                                        response.setStatus(
+                                                                        jakarta.servlet.http.HttpServletResponse.SC_OK);
+                                                })
+                                                .permitAll())
+                                .rememberMe(remember -> remember
+                                                .key("uniqueAndSecretKey")
+                                                .tokenValiditySeconds(604800)); // 7 days
 
                 return http.build();
         }
@@ -35,24 +57,24 @@ public class SecurityConfig {
         @Bean
         public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
                 org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-                configuration.setAllowedOrigins(java.util.Arrays.asList("*"));
+                configuration.setAllowedOrigins(java.util.Arrays.asList("http://localhost:5173"));
                 configuration.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 configuration.setAllowedHeaders(java.util.Arrays.asList("*"));
+                configuration.setAllowCredentials(true);
                 org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**", configuration);
                 return source;
         }
 
         @Bean
-        public UserDetailsService userDetailsService() {
-                // AQUI VOCÊ DEFINE O LOGIN E SENHA DO ADMIN
-                // Para mudar, basta trocar o "admin" e "doces123" abaixo.
-                UserDetails admin = User.withDefaultPasswordEncoder()
-                                .username("admin") // <-- Seu Usuário
-                                .password("doces123") // <-- Sua Senha
-                                .roles("ADMIN")
-                                .build();
+        public org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {
+                return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        }
 
-                return new InMemoryUserDetailsManager(admin);
+        @Bean
+        public org.springframework.security.authentication.AuthenticationManager authenticationManager(
+                        org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
         }
 }

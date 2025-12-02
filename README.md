@@ -54,6 +54,38 @@ git push
 
 ---
 
+## 🌟 Funcionalidades Implementadas
+
+### 🛒 Cliente
+*   **Catálogo de Produtos:** Visualização de doces com preços e fotos.
+*   **Carrinho de Compras:** Adicionar/Remover itens.
+*   **Checkout:** Pagamento via PIX, Cartão ou Dinheiro.
+*   **Meus Pedidos:** Histórico completo.
+*   **Rastreamento em Tempo Real:** Barra de progresso (Recebido -> Preparando -> Saiu -> Entregue).
+
+### 👮‍♂️ Painel Administrativo
+*   **Dashboard:** Visão geral do estoque e pedidos.
+*   **Gestão de Pedidos:**
+    *   Ver nome e e-mail do cliente.
+    *   **Avançar Status:** Botão para mudar a etapa do pedido.
+    *   **Cancelar Pedido:** Estorna o estoque automaticamente.
+*   **Logs de Acesso:** Monitoramento de quem entra no sistema.
+
+---
+
+## 🔑 Acesso ao Sistema
+
+### 👤 Cliente (Teste)
+*   **Login:** `neto`
+*   **Senha:** `123`
+
+### 👑 Administrador
+*   **URL:** [http://localhost:8082/admin](http://localhost:8082/admin)
+*   **Login:** `admin@doces.com`
+*   **Senha:** `admin`
+
+---
+
 ## 📂 Estrutura das Pastas
 
 *   **`backend/`**: O "cérebro" do sistema (Java/Spring Boot).
@@ -61,3 +93,4 @@ git push
 *   **`frontend/`**: O "rosto" do sistema (React/Site).
     *   `src/components/`: Onde ficam as partes visuais (Botões, Cabeçalho).
     *   `src/pages/`: As páginas do site (Home, Menu, Contato).
+

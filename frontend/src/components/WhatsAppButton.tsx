@@ -30,14 +30,14 @@ const FloatButton = styled.a`
 `;
 
 export const WhatsAppButton = () => {
-    return (
-        <FloatButton
-            href="https://wa.me/5511951737912"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Fale conosco no WhatsApp"
-        >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
-        </FloatButton>
-    );
+  return (
+    <FloatButton
+      href="https://wa.me/5511976299225"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Fale conosco no WhatsApp"
+    >
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </FloatButton>
+  );
 };

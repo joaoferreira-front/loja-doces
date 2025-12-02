@@ -48,6 +48,8 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
+            cursor: pointer;
+            border: none;
         }
     </style>
 </head>
@@ -56,7 +58,7 @@
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h1>Painel Administrativo</h1>
-            <a href="/" class="btn">Voltar para Loja</a>
+            <a href="http://localhost:5173" class="btn">Voltar para Loja</a>
         </div>
 
         <h2>📦 Estoque de Produtos</h2>
@@ -80,29 +82,82 @@
             </tbody>
         </table>
 
-        <h2>📝 Pedidos Realizados</h2>
+        <h2>📝 Pedidos Recentes</h2>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Data Entrega</th>
-                    <th>Total</th>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>Valor Total</th>
                     <th>Pagamento</th>
+                    <th>Status</th>
                     <th>Itens</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="pedido : ${pedidos}">
                     <td th:text="${pedido.id}">1</td>
-                    <td th:text="${pedido.dataEntrega}">2025-01-01</td>
-                    <td th:text="'R$ ' + ${pedido.valorTotal}">R$ 50.00</td>
+                    <td>
+                        <span th:if="${pedido.cliente != null}"
+                            th:text="${pedido.cliente.nome} + ' (' + ${pedido.cliente.email} + ')'">Cliente</span>
+                        <span th:if="${pedido.cliente == null}" style="color: red;">Anônimo</span>
+                    </td>
+                    <td th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}">01/01/2024</td>
+                    <td th:text="'R$ ' + ${pedido.valorTotal}">R$ 0.00</td>
                     <td th:text="${pedido.formaPagamento}">PIX</td>
+                    <td>
+                        <span th:text="${pedido.status}"
+                            th:style="${pedido.status == T(com.candystore.enums.StatusPedido).CANCELADO} ? 'color: red; font-weight: bold;' : 'color: green; font-weight: bold;'">
+                            CONFIRMADO
+                        </span>
+                    </td>
                     <td>
                         <ul style="margin: 0; padding-left: 1rem;">
                             <li th:each="item : ${pedido.itens}"
-                                th:text="${item.quantidade} + 'x ' + ${item.produto.nome}">1x Doce</li>
+                                th:text="${item.quantidade} + 'x ' + ${item.produto.nome}">
+                                1x Doce</li>
                         </ul>
                     </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <form
+                                th:if="${pedido.status != T(com.candystore.enums.StatusPedido).CANCELADO} and ${pedido.status != T(com.candystore.enums.StatusPedido).ENTREGUE}"
+                                th:action="@{/admin/avancar-status/{id}(id=${pedido.id})}" method="post">
+                                <button type="submit" class="btn"
+                                    style="background: #5bc0de; font-size: 0.8rem;">Avançar Status ➡️</button>
+                            </form>
+                            <form th:if="${pedido.status != T(com.candystore.enums.StatusPedido).CANCELADO}"
+                                th:action="@{/admin/cancelar/{id}(id=${pedido.id})}" method="post"
+                                onsubmit="return confirm('Tem certeza que deseja cancelar este pedido? O estoque será restaurado.');">
+                                <button type="submit" class="btn"
+                                    style="background: #d9534f; font-size: 0.8rem;">Cancelar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>🔐 Últimos Acessos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Usuário</th>
+                    <th>Status</th>
+                    <th>Mensagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="log : ${logs}">
+                    <td th:text="${#temporals.format(log.dataHora, 'dd/MM/yyyy HH:mm:ss')}">01/01/2024 10:00:00</td>
+                    <td th:text="${log.email}">email@teste.com</td>
+                    <td>
+                        <span th:if="${log.sucesso}" style="color: green; font-weight: bold;">Sucesso</span>
+                        <span th:if="${!log.sucesso}" style="color: red; font-weight: bold;">Falha</span>
+                    </td>
+                    <td th:text="${log.mensagem}">Login realizado</td>
                 </tr>
             </tbody>
         </table>

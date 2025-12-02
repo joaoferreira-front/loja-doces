@@ -87,8 +87,12 @@ const CartIcon = styled(Link)`
   }
 `;
 
+import { useAuth } from '../context/AuthContext';
+
+// ... (inside component)
 export const Header = () => {
   const { cart } = useCart();
+  const { isAuthenticated, user, logout } = useAuth();
   const itemCount = cart.reduce((acc, item) => acc + item.quantidadeCarrinho, 0);
 
   return (
@@ -102,6 +106,34 @@ export const Header = () => {
           <Link to="/">Home</Link>
           <Link to="/menu">Cardápio</Link>
           <Link to="/contato">Contato</Link>
+
+          {isAuthenticated ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link to="/meus-pedidos" style={{ color: 'var(--accent-color)', fontWeight: '600' }}>
+                Meus Pedidos
+              </Link>
+              <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
+                Olá, {user?.nome?.split(' ')[0]}
+              </span>
+              <button
+                onClick={logout}
+                style={{
+                  background: 'none',
+                  border: '1px solid var(--primary-color)',
+                  color: 'var(--primary-color)',
+                  padding: '0.3rem 0.8rem',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem'
+                }}
+              >
+                Sair
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>Login</Link>
+          )}
+
           <CartIcon to="/carrinho" title="Ver Carrinho">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"></circle>

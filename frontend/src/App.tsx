@@ -5,7 +5,11 @@ import { Home } from './pages/Home';
 import { Menu } from './pages/Menu';
 import { CartPage } from './pages/CartPage';
 import { Contact } from './pages/Contact';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { MyOrders } from './pages/MyOrders';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { WhatsAppButton } from './components/WhatsAppButton';
 
@@ -13,17 +17,23 @@ function App() {
   return (
     <Router>
       <ToastProvider>
-        <CartProvider>
-          <GlobalStyles />
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/carrinho" element={<CartPage />} />
-            <Route path="/contato" element={<Contact />} />
-          </Routes>
-          <WhatsAppButton />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <GlobalStyles />
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/loja" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/carrinho" element={<CartPage />} />
+              <Route path="/contato" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cadastro" element={<Register />} />
+              <Route path="/meus-pedidos" element={<MyOrders />} />
+            </Routes>
+            <WhatsAppButton />
+          </CartProvider>
+        </AuthProvider>
       </ToastProvider>
     </Router>
   );

@@ -4,9 +4,14 @@ import axios from 'axios';
 // This allows the app to work on localhost and on the local network (mobile)
 const getBaseUrl = () => {
     const { hostname } = window.location;
-    return `http://${hostname}:8080/api`;
+    return `http://${hostname}:8082/api`;
 };
 
 export const api = axios.create({
     baseURL: getBaseUrl(),
+    withCredentials: true,
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json'
+    }
 });

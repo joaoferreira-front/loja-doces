@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const HeroSection = styled.section`
   background: linear-gradient(135deg, var(--secondary-color) 0%, var(--white) 100%);
@@ -29,7 +30,7 @@ const Subtitle = styled.p`
   font-weight: 300;
 `;
 
-const Button = styled.a`
+const Button = styled(Link)`
   background-color: var(--primary-color);
   color: var(--white);
   padding: 1.2rem 3.5rem;
@@ -40,6 +41,7 @@ const Button = styled.a`
   box-shadow: 0 10px 20px rgba(212, 140, 149, 0.3);
   transition: transform 0.2s, background-color 0.3s;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background-color: #c0757e;
@@ -52,7 +54,7 @@ export const Hero = () => {
     <HeroSection>
       <Subtitle>Feito à Mão com Amor</Subtitle>
       <Title>Uma Mordida<br />de Felicidade</Title>
-      <Button href="#menu">Peça Agora</Button>
+      <Button to="/menu">Peça Agora</Button>
     </HeroSection>
   );
 };

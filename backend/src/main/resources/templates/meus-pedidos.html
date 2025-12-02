@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Pedidos - Doces G & J</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f9f9f9;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .btn-logout {
+            padding: 0.5rem 1rem;
+            background: #eee;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .order-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .order-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #D48C95;
+        }
+
+        .order-info p {
+            margin: 0.2rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            align-self: flex-start;
+        }
+
+        .status-CONFIRMADO {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-CANCELADO {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #eee;
+            z-index: 0;
+        }
+
+        .step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            width: 25%;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            background: #eee;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #999;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-circle {
+            background: #D48C95;
+            color: white;
+            box-shadow: 0 0 0 5px rgba(212, 140, 149, 0.2);
+        }
+
+        .step-label {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .step.active .step-label {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-cancel {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-cancel:hover {
+            background: #ff1744;
+        }
+
+        .btn-buy-again {
+            background: #D48C95;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .btn-buy-again:hover {
+            background: #c0757e;
+        }
+
+        /* Welcome Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast-msg {
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Welcome Toast -->
+    <div id="welcomeToast" class="toast">
+        <span class="toast-icon">👋</span>
+        <span class="toast-msg" id="toastMessage">Bem-vindo!</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Meus Pedidos 📦</h1>
+            <div>
+                <span th:text="${usuario}" style="margin-right: 1rem; color: #888;"></span>
+                <a href="/logout" class="btn-logout">Sair</a>
+            </div>
+        </div>
+
+        <div th:each="pedido : ${pedidos}" class="order-card">
+            <div class="order-header">
+                <div class="order-info">
+                    <h3 th:text="'Pedido #' + ${pedido.id}">Pedido #1</h3>
+                    <p th:text="'Data: ' + ${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy')}">Data: 01/01/2025</p>
+                    <p th:text="'Total: R$ ' + ${pedido.valorTotal}">Total: R$ 50.00</p>
+                    <p>
+                        Itens:
+                        <span th:each="item, iterStat : ${pedido.itens}"
+                            th:text="${item.produto.nome} + ( ${!iterStat.last} ? ', ' : '')">Bolo</span>
+                    </p>
+                    <a href="/" class="btn-buy-again">Pedir Novamente 🍬</a>
+                </div>
+
+                <div
+                    style="text-align: right; display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                    <span th:text="${pedido.status}" th:class="'status status-' + ${pedido.status}">CONFIRMADO</span>
+
+                    <form th:if="${pedido.status != T(com.candystore.enums.StatusPedido).CANCELADO}"
+                        th:action="@{/meus-pedidos/cancelar/{id}(id=${pedido.id})}" method="post"
+                        onsubmit="return confirm('Deseja realmente cancelar?');">
+                        <button type="submit" class="btn-cancel">Cancelar Pedido</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Progress Bar (Only for non-cancelled orders) -->
+            <div class="progress-container" th:if="${pedido.status != T(com.candystore.enums.StatusPedido).CANCELADO}">
+                <div class="progress-bar">
+                    <div class="step active">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Pendente</div>
+                    </div>
+                    <div class="step"
+                        th:classappend="${pedido.status == T(com.candystore.enums.StatusPedido).CONFIRMADO} ? 'active'">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Preparando</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Saiu p/ Entrega</div>
+                    </div>
+                    <div class="step"
+                        th:classappend="${pedido.status == T(com.candystore.enums.StatusPedido).ENTREGUE} ? 'active'">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Entregue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(pedidos)}" style="text-align: center; color: #888; margin-top: 3rem;">
+            <p>Você ainda não fez nenhum pedido.</p>
+            <a href="/" style="color: #D48C95; font-weight: bold;">Ir para a Loja</a>
+        </div>
+    </div>
+
+    <script>
+        // Check URL parameters for welcome message
+        const urlParams = new URLSearchParams(window.location.search);
+        const toast = document.getElementById('welcomeToast');
+        const toastMsg = document.getElementById('toastMessage');
+        const toastIcon = document.querySelector('.toast-icon');
+
+        if (urlParams.has('registered')) {
+            toastMsg.textContent = "Bem-vindo à família Doces G & J! 🍬";
+            toastIcon.textContent = "🎉";
+            showToast();
+        } else if (urlParams.has('login')) { // We need to add this param in AuthController or SecurityConfig success handler
+            // Since we didn't add ?login=true in SecurityConfig yet, this might not trigger on simple login.
+            // But let's keep the logic ready.
+            toastMsg.textContent = "Que bom te ver de novo! ❤️";
+            toastIcon.textContent = "👋";
+            showToast();
+        } else {
+            // Fallback: If user just logged in (we can check if referrer was login page, but URL param is safer)
+            // For now, let's show a generic "Welcome back" if it's the first visit in this session? 
+            // No, let's stick to explicit params to avoid annoyance.
+        }
+
+        function showToast() {
+            setTimeout(() => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            }, 500);
+        }
+    </script>
+
+</html>

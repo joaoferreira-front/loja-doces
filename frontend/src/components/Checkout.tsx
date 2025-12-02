@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 
 const CheckoutContainer = styled.div`
@@ -84,9 +86,11 @@ const MAX_DISTANCE_KM = 20;
 
 export const Checkout = () => {
   const { cart, total, clearCart } = useCart();
+  const { user } = useAuth();
   const { showToast } = useToast();
   const [dataEntrega, setDataEntrega] = useState('');
   const [formaPagamento, setFormaPagamento] = useState('PIX');
+  const [parcelas, setParcelas] = useState(1);
 
   // Address State
   const [rua, setRua] = useState('');
@@ -158,6 +162,7 @@ export const Checkout = () => {
 
     const pedido = {
       formaPagamento,
+      parcelas: formaPagamento === 'CREDITO' ? parcelas : 1,
       dataEntrega: dataEntrega + 'T10:00:00',
       itens: cart.map(item => ({
         produtoId: item.id,
@@ -172,13 +177,20 @@ export const Checkout = () => {
       await api.post('/checkout', pedido);
 
       let msg = `Olá! Gostaria de confirmar meu pedido na Doces G & J.\n`;
+      if (user && user.nome) {
+        msg += `Cliente: *${user.nome}*\n`;
+      }
       msg += `--------------------------------\n`;
       cart.forEach(item => {
         msg += `${item.quantidadeCarrinho}x ${item.nome}\n`;
       });
       msg += `--------------------------------\n`;
       msg += `*Total: R$ ${total.toFixed(2)}*\n`;
-      msg += `Pagamento: ${formaPagamento}\n`;
+      msg += `Pagamento: ${formaPagamento}`;
+      if (formaPagamento === 'CREDITO') {
+        msg += ` (${parcelas}x de R$ ${(total / parcelas).toFixed(2)})`;
+      }
+      msg += `\n`;
       msg += `Entrega: ${dataEntrega}\n`;
       msg += `Endereço: ${rua}, ${numero} - ${cidade}\n`;
 
@@ -186,11 +198,15 @@ export const Checkout = () => {
         msg += `\n*Link de Pagamento InfinitePay:* (Aguardando Link)\n`;
       }
 
-      const whatsappUrl = `https://wa.me/5511951737912?text=${encodeURIComponent(msg)}`;
+      const whatsappUrl = `https://wa.me/5511976299225?text=${encodeURIComponent(msg)}`;
       window.open(whatsappUrl, '_blank');
 
       clearCart();
       showToast('Pedido realizado com sucesso! Redirecionando para o WhatsApp...', 'success');
+      // Redirect to orders page after a short delay
+      setTimeout(() => {
+        window.location.href = '/meus-pedidos';
+      }, 2000);
     } catch (error: any) {
       console.error('Erro ao finalizar pedido:', error);
       // Mostra a mensagem exata do backend (ex: "Estoque insuficiente")
@@ -204,7 +220,26 @@ export const Checkout = () => {
     }
   };
 
-  if (cart.length === 0) return null;
+  if (cart.length === 0) {
+    return (
+      <CheckoutContainer style={{ textAlign: 'center', padding: '4rem 2rem' }}>
+        <h2 style={{ color: 'var(--primary-color)', marginBottom: '1rem' }}>Seu carrinho está vazio 😢</h2>
+        <p style={{ color: '#666', marginBottom: '2rem' }}>Que tal adicionar alguns doces deliciosos?</p>
+        <Link to="/menu" style={{
+          display: 'inline-block',
+          backgroundColor: 'var(--primary-color)',
+          color: 'white',
+          padding: '1rem 2rem',
+          borderRadius: '30px',
+          textDecoration: 'none',
+          fontWeight: 'bold',
+          transition: 'background 0.3s'
+        }}>
+          Voltar para o Cardápio
+        </Link>
+      </CheckoutContainer>
+    );
+  }
 
   return (
     <CheckoutContainer>
@@ -267,10 +302,27 @@ export const Checkout = () => {
             onChange={e => setFormaPagamento(e.target.value)}
           >
             <option value="PIX">PIX</option>
-            <option value="INFINITE_PAY">InfinitePay (Cartão)</option>
+            <option value="CREDITO">Cartão de Crédito</option>
+            <option value="INFINITE_PAY">InfinitePay (Link)</option>
             <option value="DINHEIRO">Dinheiro</option>
           </Select>
         </label>
+
+        {formaPagamento === 'CREDITO' && (
+          <label>
+            Parcelas (Mínimo R$ 100,00 por parcela):
+            <Select
+              value={parcelas}
+              onChange={e => setParcelas(Number(e.target.value))}
+            >
+              {Array.from({ length: Math.max(1, Math.floor(total / 100)) }, (_, i) => i + 1).map(num => (
+                <option key={num} value={num}>
+                  {num}x de R$ {(total / num).toFixed(2)}
+                </option>
+              ))}
+            </Select>
+          </label>
+        )}
 
         {formaPagamento === 'INFINITE_PAY' && (
           <div style={{ padding: '1rem', background: '#f0f0f0', borderRadius: '10px', fontSize: '0.9rem' }}>

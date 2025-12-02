@@ -20,6 +20,8 @@ public class PedidoDTO {
     @Size(min = 1, message = "O pedido deve conter pelo menos um item")
     private List<ItemPedidoDTO> itens;
 
+    private Integer parcelas;
+
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
@@ -42,5 +44,13 @@ public class PedidoDTO {
 
     public void setItens(List<ItemPedidoDTO> itens) {
         this.itens = itens;
+    }
+
+    public Integer getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(Integer parcelas) {
+        this.parcelas = parcelas;
     }
 }
