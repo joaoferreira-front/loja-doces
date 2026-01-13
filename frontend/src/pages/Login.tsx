@@ -163,7 +163,7 @@ export const Login = () => {
             required
             style={{ width: '100%', paddingRight: '45px' }}
           />
-          <ToggleButton type="button" onClick={() => setShowPassword(!showPassword)} title={showPassword ? "Ocultar senha" : "Ver senha"}>
+          <ToggleButton type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowPassword(!showPassword); }} title={showPassword ? "Ocultar senha" : "Ver senha"}>
             {showPassword ? '🙈' : '👁️'}
           </ToggleButton>
         </PasswordWrapper>
