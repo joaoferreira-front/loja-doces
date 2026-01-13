@@ -26,6 +26,7 @@ public class DataInitializer {
                         if (adminOpt.isPresent()) {
                                 Usuario admin = adminOpt.get();
                                 admin.setSenha(passwordEncoder.encode("Jucabala@123"));
+                                admin.setRole(Usuario.Role.ADMIN);
                                 usuarioRepository.save(admin);
                                 System.out.println("Senha do Admin ATUALIZADA para: Jucabala@123");
                         } else {
@@ -34,6 +35,7 @@ public class DataInitializer {
                                 admin.setEmail("admin@doces.com");
                                 admin.setSenha(passwordEncoder.encode("Jucabala@123"));
                                 admin.setProvider(Usuario.Provider.LOCAL);
+                                admin.setRole(Usuario.Role.ADMIN);
                                 usuarioRepository.save(admin);
                                 System.out.println("Usuário Admin CRIADO: admin@doces.com / Jucabala@123");
                         }
@@ -45,6 +47,7 @@ public class DataInitializer {
                                 neto.setEmail("neto");
                                 neto.setSenha(passwordEncoder.encode("123"));
                                 neto.setProvider(Usuario.Provider.LOCAL);
+                                neto.setRole(Usuario.Role.USER);
                                 usuarioRepository.save(neto);
                                 System.out.println("Usuário Neto criado: neto / 123");
                         }

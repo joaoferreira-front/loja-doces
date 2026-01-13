@@ -33,7 +33,21 @@ public class AuthController {
         user.setNome(request.getNome());
         user.setEmail(request.getEmail());
         user.setSenha(passwordEncoder.encode(request.getSenha()));
+        user.setRole(Usuario.Role.USER); // Default to USER
         usuarioRepository.save(user);
-        return ResponseEntity.status(201).body("Usuário criado com sucesso");
+
+        return ResponseEntity.status(201).body(java.util.Collections.singletonMap("redirectUrl", "/"));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody com.candystore.dto.LoginRequest request) {
+        return usuarioRepository.findByEmail(request.getEmail())
+                .filter(user -> passwordEncoder.matches(request.getSenha(), user.getSenha()))
+                .map(user -> {
+                    String redirectUrl = user.getRole() == Usuario.Role.ADMIN ? "/admin" : "/";
+                    return ResponseEntity.ok(java.util.Collections.singletonMap("redirectUrl", redirectUrl));
+                })
+                .orElse(ResponseEntity.status(401)
+                        .body(java.util.Collections.singletonMap("error", "Email ou senha inválidos")));
     }
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { api } from '../services/api';
 import { useToast } from '../context/ToastContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Container = styled.div`
@@ -49,14 +49,13 @@ const Button = styled.button`
   }
 `;
 
-
-
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const { showToast } = useToast();
   const { checkAuth } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,11 +84,13 @@ export const Login = () => {
           } else {
             window.location.href = 'http://localhost:8082/admin';
           }
+        } else if (response.data.redirectUrl === '/') {
+          navigate('/');
         } else {
           window.location.href = response.data.redirectUrl;
         }
       } else {
-        window.location.href = '/meus-pedidos';
+        navigate('/meus-pedidos');
       }
     } catch (error: any) {
       console.error('Login error:', error);

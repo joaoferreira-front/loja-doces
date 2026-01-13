@@ -70,6 +70,21 @@ public class Usuario {
         this.provider = provider;
     }
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
+    public enum Role {
+        ADMIN, USER
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public java.time.LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
