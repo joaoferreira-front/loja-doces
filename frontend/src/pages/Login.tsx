@@ -49,9 +49,39 @@ const Button = styled.button`
   }
 `;
 
+
+
+const PasswordWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const ToggleButton = styled.button`
+  position: absolute;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.3s;
+  z-index: 10;
+
+  &:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+`;
+
 export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const { showToast } = useToast();
   const { checkAuth } = useAuth();
@@ -124,13 +154,19 @@ export const Login = () => {
           onChange={e => setUsername(e.target.value)}
           required
         />
-        <Input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
+        <PasswordWrapper>
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Senha"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            style={{ width: '100%', paddingRight: '45px' }}
+          />
+          <ToggleButton type="button" onClick={() => setShowPassword(!showPassword)} title={showPassword ? "Ocultar senha" : "Ver senha"}>
+            {showPassword ? '🙈' : '👁️'}
+          </ToggleButton>
+        </PasswordWrapper>
         <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#666' }}>
           <input
             type="checkbox"
