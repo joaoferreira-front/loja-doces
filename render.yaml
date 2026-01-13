@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: loja-doces-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPRING_JPA_DATABASE_PLATFORM
+        value: org.hibernate.dialect.PostgreSQLDialect
+      - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+        value: org.postgresql.Driver
+    envVars:
+      - fromDatabase:
+          name: loja-doces-db
+          property: connectionString
+        key: SPRING_DATASOURCE_URL
+      - fromDatabase:
+          name: loja-doces-db
+          property: user
+        key: SPRING_DATASOURCE_USERNAME
+      - fromDatabase:
+          name: loja-doces-db
+          property: password
+        key: SPRING_DATASOURCE_PASSWORD
+
+databases:
+  - name: loja-doces-db
+    plan: free
+    region: ohio
+    databaseName: lojadoces
+    user: admin
