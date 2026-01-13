@@ -147,7 +147,7 @@ export const Header = () => {
     <HeaderContainer>
       <Nav>
         <Logo to="/">
-          <img src="/logo.jpg" alt="Doces G & J Logo" />
+          <img src="./logo.jpg" alt="Doces G & J Logo" />
           <span>Doces G & J</span>
         </Logo>
 
