@@ -80,7 +80,11 @@ export const Login = () => {
 
       if (response.data && response.data.redirectUrl) {
         if (response.data.redirectUrl.includes('admin')) {
-          window.location.href = 'http://localhost:8082/admin';
+          if (window.location.hostname.includes('github.io') || window.location.hostname.includes('onrender.com')) {
+            window.location.href = 'https://doces-g-and-j.onrender.com/admin';
+          } else {
+            window.location.href = 'http://localhost:8082/admin';
+          }
         } else {
           window.location.href = response.data.redirectUrl;
         }
