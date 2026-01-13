@@ -8,6 +8,7 @@ import { Contact } from './pages/Contact';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { MyOrders } from './pages/MyOrders';
+import { AdminDashboard } from './pages/AdminDashboard';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -31,6 +32,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<Register />} />
               <Route path="/meus-pedidos" element={<MyOrders />} />
+              <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
             <Footer />
             <WhatsAppButton />
