@@ -1,13 +1,12 @@
 package com.candystore.controller;
 
+import com.candystore.dto.RegisterRequest;
 import com.candystore.model.Usuario;
 import com.candystore.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -19,33 +18,22 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private static final java.util.List<String> PALAVRAS_PROIBIDAS = java.util.Arrays.asList(
-            "palavrao", "feio", "bobo", "chato", "idiota", "burro", "besta", "merda", "bosta", "caralho", "porra",
-            "puta", "viado", "corno");
-
+    /**
+     * Endpoint de registro de usuário.
+     * Recebe um JSON com nome, email e senha e cria o usuário no banco.
+     */
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
-            @org.springframework.web.bind.annotation.RequestBody com.candystore.dto.RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        // Verifica se o e‑mail já está cadastrado
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Email já cadastrado!");
+            return ResponseEntity.badRequest().body("Email já cadastrado");
         }
-
-        // Profanity Filter
-        String nomeLower = request.getNome().toLowerCase();
-        for (String palavra : PALAVRAS_PROIBIDAS) {
-            if (nomeLower.contains(palavra)) {
-                return ResponseEntity.badRequest().body("Nome inválido. Por favor, escolha um nome apropriado.");
-            }
-        }
-
-        Usuario usuario = new Usuario();
-        usuario.setNome(request.getNome());
-        usuario.setEmail(request.getEmail());
-        usuario.setSenha(passwordEncoder.encode(request.getSenha()));
-        usuario.setProvider(Usuario.Provider.LOCAL);
-
-        usuarioRepository.save(usuario);
-
-        return ResponseEntity.ok("Cadastro realizado com sucesso!");
+        // Cria a entidade de usuário
+        Usuario user = new Usuario();
+        user.setNome(request.getNome());
+        user.setEmail(request.getEmail());
+        user.setSenha(passwordEncoder.encode(request.getSenha()));
+        usuarioRepository.save(user);
+        return ResponseEntity.status(201).body("Usuário criado com sucesso");
     }
 }
