@@ -61,6 +61,20 @@
             <a href="http://localhost:5173" class="btn">Voltar para Loja</a>
         </div>
 
+        <!-- Card de Total de Vendas -->
+        <div
+            style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; border-left: 5px solid #28a745; margin-top: 1rem;">
+            <div style="background: #e8f5e9; padding: 1rem; border-radius: 50%;">
+                <span style="font-size: 2rem;">💰</span>
+            </div>
+            <div>
+                <h3 style="margin: 0; color: #666; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                    Total Vendido</h3>
+                <p style="margin: 0; font-size: 2rem; font-weight: bold; color: #28a745;"
+                    th:text="'R$ ' + ${totalVendas}">R$ 0.00</p>
+            </div>
+        </div>
+
         <h2>📦 Estoque de Produtos</h2>
         <table>
             <thead>
