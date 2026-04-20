@@ -37,12 +37,12 @@ export const Contact = () => {
 
       <InfoGroup>
         <h3>WhatsApp</h3>
-        <p>(11) 95173-7912</p>
+        <p>(00) 00000-0000</p>
       </InfoGroup>
 
       <InfoGroup>
         <h3>Endereço</h3>
-        <p>Rua Ponta Grossa, 6<br />Batistini - São Bernardo do Campo, SP</p>
+        <p>Avenida das Doçuras, 123<br />Centro - São Paulo, SP</p>
       </InfoGroup>
 
       <InfoGroup>
@@ -52,7 +52,7 @@ export const Contact = () => {
 
       <InfoGroup>
         <h3>Email</h3>
-        <p>contato@docesgej.com.br</p>
+        <p>contato@demo.com</p>
       </InfoGroup>
     </Container>
   );

@@ -207,7 +207,7 @@ export const ProductList = () => {
   const { showToast } = useToast();
   const { user } = useAuth(); // Get user to check for ADMIN role
 
-  const isAdmin = user?.role === 'ADMIN' || user?.email === 'admin@doces.com'; // Fallback check
+  const isAdmin = user?.role === 'ADMIN' || user?.email === 'admin@demo.com'; // Fallback check
 
   useEffect(() => {
     loadProducts();

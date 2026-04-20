@@ -35,7 +35,7 @@ export const Footer = () => {
   return (
     <FooterContainer>
       <Copyright>
-        &copy; {currentYear} Doces G & J. Todos os direitos reservados.
+        &copy; {currentYear} Doceria Showcase. Todos os direitos reservados.
       </Copyright>
       <Credits>
         Created by: <a href="#" onClick={(e) => e.preventDefault()}>João.dev</a>

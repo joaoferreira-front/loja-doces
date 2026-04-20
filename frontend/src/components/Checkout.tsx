@@ -213,7 +213,7 @@ export const Checkout = () => {
     try {
       await api.post('/checkout', pedido);
 
-      let msg = `Olá! Gostaria de confirmar meu pedido na Doces G & J.\n`;
+      let msg = `Olá! Gostaria de confirmar meu pedido na Doceria Showcase.\n`;
       if (user && user.nome) {
         msg += `Cliente: *${user.nome}*\n`;
       }
@@ -239,11 +239,12 @@ export const Checkout = () => {
         msg += `\n*Pagamento via PIX realizado!*\n`;
       }
 
-      const whatsappUrl = `https://wa.me/5511976299225?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappUrl, '_blank');
+      // Redirecionamento para WhatsApp desativado em favor da demonstração genérica
+      // const whatsappUrl = `https://wa.me/0000000000000?text=${encodeURIComponent(msg)}`;
+      // window.open(whatsappUrl, '_blank');
 
       clearCart();
-      showToast('Pedido realizado com sucesso! Redirecionando para o WhatsApp...', 'success');
+      showToast('Pedido realizado com sucesso!', 'success');
       setTimeout(() => {
         window.location.href = '/meus-pedidos';
       }, 2000);
@@ -471,9 +472,7 @@ export const Checkout = () => {
                 ))}
               </Select>
             </label>
-            <div style={{ padding: '1rem', background: '#f0f0f0', borderRadius: '10px', fontSize: '0.9rem', marginTop: '1rem' }}>
-              ℹ️ Você receberá um link seguro no WhatsApp para concluir o pagamento em {parcelas}x.
-            </div>
+
           </>
         )}
 

@@ -81,9 +81,9 @@ interface PixPaymentProps {
 }
 
 // CHAVE PIX DE EXEMPLO - SUBSTITUIR PELA REAL
-const PIX_KEY = '149cef56-a04f-4f49-ae8d-e882362c6850';
-const MERCHANT_NAME = 'DOCES G E J';
-const MERCHANT_CITY = 'SAO BERNARDO DO CAMPO';
+const PIX_KEY = '00000000-0000-0000-0000-000000000000';
+const MERCHANT_NAME = 'DOCERIA SHOWCASE';
+const MERCHANT_CITY = 'SAO PAULO';
 
 export const PixPayment = ({ total, onConfirm, onCancel }: PixPaymentProps) => {
   const { showToast } = useToast();

@@ -124,10 +124,8 @@ public class ProdutoService {
                 Produto produto = produtoRepository.findById(id)
                                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-                // Caminho absoluto para a pasta public do frontend (Ajuste conforme seu
-                // ambiente)
-                // Usando o caminho conhecido do ambiente do usuário
-                String uploadDir = "c:\\Users\\joao\\Desktop\\antigravity\\scratch\\Loja-de-Doce\\frontend\\public\\uploads";
+                // Caminho para a pasta de uploads (ajustado para ser relativo)
+                String uploadDir = System.getProperty("user.dir") + "/uploads";
 
                 java.io.File directory = new java.io.File(uploadDir);
                 if (!directory.exists()) {

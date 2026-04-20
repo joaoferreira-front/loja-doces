@@ -147,8 +147,8 @@ export const Header = () => {
     <HeaderContainer>
       <Nav>
         <Logo to="/">
-          <img src="./logo.jpg" alt="Doces G & J Logo" />
-          <span>Doces G & J</span>
+          <img src="./logo.jpg" alt="Logo Showcase" />
+          <span>Doceria Showcase</span>
         </Logo>
 
         <MobileMenuIcon onClick={toggleMenu} aria-label="Menu">

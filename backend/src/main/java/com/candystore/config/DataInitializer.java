@@ -22,34 +22,34 @@ public class DataInitializer {
                 return args -> {
                         // Criar Admin se não existir
                         // Criar ou Atualizar Admin
-                        java.util.Optional<Usuario> adminOpt = usuarioRepository.findByEmail("admin@doces.com");
+                        java.util.Optional<Usuario> adminOpt = usuarioRepository.findByEmail("admin@demo.com");
                         if (adminOpt.isPresent()) {
                                 Usuario admin = adminOpt.get();
-                                admin.setSenha(passwordEncoder.encode("Jucabala@123"));
+                                admin.setSenha(passwordEncoder.encode("Admin@123"));
                                 admin.setRole(Usuario.Role.ADMIN);
                                 usuarioRepository.save(admin);
-                                System.out.println("Senha do Admin ATUALIZADA para: Jucabala@123");
+                                System.out.println("Senha do Admin ATUALIZADA para: Admin@123");
                         } else {
                                 Usuario admin = new Usuario();
                                 admin.setNome("Administrador");
-                                admin.setEmail("admin@doces.com");
-                                admin.setSenha(passwordEncoder.encode("Jucabala@123"));
+                                admin.setEmail("admin@demo.com");
+                                admin.setSenha(passwordEncoder.encode("Admin@123"));
                                 admin.setProvider(Usuario.Provider.LOCAL);
                                 admin.setRole(Usuario.Role.ADMIN);
                                 usuarioRepository.save(admin);
-                                System.out.println("Usuário Admin CRIADO: admin@doces.com / Jucabala@123");
+                                System.out.println("Usuário Admin CRIADO: admin@demo.com / Admin@123");
                         }
 
-                        // Criar Neto se não existir
-                        if (usuarioRepository.findByEmail("neto").isEmpty()) {
-                                Usuario neto = new Usuario();
-                                neto.setNome("Neto");
-                                neto.setEmail("neto");
-                                neto.setSenha(passwordEncoder.encode("123"));
-                                neto.setProvider(Usuario.Provider.LOCAL);
-                                neto.setRole(Usuario.Role.USER);
-                                usuarioRepository.save(neto);
-                                System.out.println("Usuário Neto criado: neto / 123");
+                        // Criar Usuario Demo se não existir
+                        if (usuarioRepository.findByEmail("usuario@demo.com").isEmpty()) {
+                                Usuario demoUser = new Usuario();
+                                demoUser.setNome("Usuario Demo");
+                                demoUser.setEmail("usuario@demo.com");
+                                demoUser.setSenha(passwordEncoder.encode("User@123"));
+                                demoUser.setProvider(Usuario.Provider.LOCAL);
+                                demoUser.setRole(Usuario.Role.USER);
+                                usuarioRepository.save(demoUser);
+                                System.out.println("Usuário Demo criado: usuario@demo.com / User@123");
                         }
                 };
         }

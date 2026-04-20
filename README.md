@@ -1,66 +1,76 @@
-# 🍬 Loja de Doces G & J
+# 🍬 Doceria Showcase
 
-Seja bem-vindo ao repositório oficial da **Loja de Doces G & J**. Este projeto é um sistema completo de e-commerce para venda de doces, incluindo uma interface moderna para clientes e um painel administrativo poderoso.
+Seja bem-vindo ao repositório da **Doceria Showcase**. Este projeto é um sistema completo de e-commerce desenvolvido para demonstração, apresentando uma interface moderna para clientes e um painel administrativo robusto.
+
+---
+
+## 👨‍💻 Desenvolvido por
+**João.dev**
+*Transformando ideias em experiências digitais.*
 
 ---
 
 ## 🚀 Como Rodar o Projeto
 
-Nós facilitamos tudo para você!
+Nós facilitamos a inicialização para você em qualquer sistema:
 
-1.  Vá até a pasta raiz do projeto.
-2.  Dê um **duplo clique** no arquivo `iniciar_loja.bat`.
-3.  Pronto! O backend e o frontend iniciam automaticamente.
+### Windows 🪟
+1. Vá até a pasta raiz do projeto.
+2. Dê um **duplo clique** no arquivo `iniciar_loja.bat`.
+3. O backend e o frontend iniciarão automaticamente.
 
----
-
-## 🌐 Deploy (GitHub Pages)
-
-O frontend deste projeto está configurado para ser hospedado no GitHub Pages.
-
-Para atualizar a versão online:
-1. Abra o terminal na pasta `frontend`.
-2. Rode o comando:
+### Linux / macOS 🐧🍎
+1. Abra o terminal na pasta raiz.
+2. Dê permissão e execute o script de setup:
    ```bash
-   npm run deploy
+   chmod +x setup.sh
+   ./setup.sh
    ```
-3. O site estará disponível em: `https://joaoferreira-front.github.io/loja-doces/`
+3. Siga as instruções no terminal para rodar o backend (Docker) e o frontend (NPM).
 
 ---
 
-## 🌟 Funcionalidades
+## 🌟 Funcionalidades Principais
 
-### 🎨 Design & Experiência
-*   **Hero Ultra Minimalista:** Fundo animado com efeito cascata.
-*   **Scroll Reveal:** Animações suaves ao rolar a página.
-*   **Depoimentos:** Seção dinâmica com avaliações reais.
+### 🎨 Design & UX Premium
+*   **Interface Ultra Minimalista:** Layout limpo focado na conversão.
+*   **Animações Fluidas:** Efeito cascata no Hero e Scroll Reveal em toda a página.
+*   **Design Responsivo:** Experiência perfeita em Desktop e Mobile.
 
-### 🛒 Cliente
-*   **Catálogo:** Visualização de doces com preços e fotos.
-*   **Carrinho & Checkout:** Pagamento via PIX (QR Code funcional), Cartão ou Dinheiro.
-*   **Rastreamento:** Acompanhamento do pedido em tempo real.
+### 🛒 Experiência do Cliente
+*   **Catálogo Interativo:** Visualização rápida de produtos com preços e descrições.
+*   **Carrinho Inteligente:** Gerenciamento simples de itens e quantidades.
+*   **Checkout Completo:** Suporte a PIX (com Gerador de QR Code), Cartão de Crédito e Pagamento na Entrega.
+*   **Acompanhamento:** Rastree seus pedidos em tempo real.
 
-### 👮‍♂️ Painel Administrativo
-*   **Dashboard:** Visão geral de vendas e estoque.
-*   **Gestão de Pedidos:** Controle total do fluxo de pedidos (Avançar Status, Cancelar).
-*   **Segurança:** Logs de acesso e controle de sessão.
+### 👮‍♂️ Gestão Administrativa
+*   **Dashboard Analytics:** Visão clara de vendas, estoque e usuários.
+*   **Controle de Pedidos:** Gerenciamento total do status de entrega.
+*   **Segurança Avançada:** Controle de acesso por funções (Admin/User) e logs de sistema.
 
 ---
 
-## 🔑 Acesso ao Sistema (Ambiente Local)
+## 🔑 Credenciais de Demonstração
 
-### 👤 Cliente (Teste)
-*   **Login:** `neto`
-*   **Senha:** `123`
+Para testar o ambiente local, utilize os dados abaixo:
+
+### 👤 Cliente (Amostra)
+*   **Email:** `usuario@demo.com`
+*   **Senha:** `User@123`
 
 ### 👑 Administrador
-*   **URL:** [http://localhost:8082/admin](http://localhost:8082/admin)
-*   **Login:** `admin@doces.com`
-*   **Senha:** `Jucabala@123`
+*   **Painel:** [http://localhost:8082/admin](http://localhost:8082/admin)
+*   **Email:** `admin@demo.com`
+*   **Senha:** `Admin@123`
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Estrutura Técnica
 
-*   **`backend/`**: API Java Spring Boot.
-*   **`frontend/`**: Aplicação React com Vite.
+*   **`backend/`**: API robusta em Java Spring Boot com Spring Security e JPA.
+*   **`frontend/`**: Aplicação Single Page em React, Vite e TypeScript com Styled Components.
+*   **Database**: Persistência de dados ultra-rápida utilizando H2 Database.
+*   **Containerização**: Pronto para rodar via Docker.
+
+---
+© 2024 Doceria Showcase. Criado por João.dev.

@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .println("--- Usuário encontrado: " + usuario.getEmail() + " | Senha: " + usuario.getSenha() + " ---");
 
         String role = "USER";
-        if ("admin@doces.com".equals(usuario.getEmail())) {
+        if ("admin@demo.com".equals(usuario.getEmail())) {
             role = "ADMIN";
         }
 
