@@ -13,6 +13,7 @@ import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { Footer } from './components/Footer';
+import { WhatsAppButton } from './components/WhatsAppButton';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
             <Footer />
+            <WhatsAppButton />
 
           </CartProvider>
         </AuthProvider>
